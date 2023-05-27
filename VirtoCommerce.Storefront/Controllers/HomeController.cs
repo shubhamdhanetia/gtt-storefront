@@ -36,12 +36,32 @@ namespace VirtoCommerce.Storefront.Controllers
             return View("dashboard-index");
         }
 
-        [HttpGet("about")]
-        public IActionResult About()
+        [HttpGet("regions")]
+        public async Task<ActionResult> Regions()
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, OnlyRegisteredUserAuthorizationRequirement.PolicyName);
+            if (!authorizationResult.Succeeded)
+            {
+                return Challenge();
+            }
+            WorkContext.Layout = "dashboard_layout";
+            return View("gtt-regions");
+        }
+
+        [HttpGet("agency")]
+        public async Task<ActionResult> Agency()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, OnlyRegisteredUserAuthorizationRequirement.PolicyName);
+            if (!authorizationResult.Succeeded)
+            {
+                return Challenge();
+            }
+            WorkContext.Layout = "dashboard_layout";
+            return View("gtt-agency");
         }
 
 
